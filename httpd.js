@@ -12,8 +12,12 @@ browser.on('connection', function connection(socket, req) {
 		console.log(process.hrtime()[1], " browser says ", data.toString());
 		//Now as a client, open a raw socket to DexRun on localhost
 		if (!dexter) { 
-			dexter = new net.Socket();
-			dexter.connect(50000, process.argv[2] || "192.168.1.240");
+			try {
+				dexter = new net.Socket();
+				dexter.connect(50000, process.argv[2] || "192.168.1.240");
+			} catch (e) {
+				return;
+			}
 			console.log(process.hrtime()[1], " dexter connecting");
 			dexter.on("connect", function () {
 				console.log(process.hrtime()[1], " dexter connected");
@@ -38,8 +42,10 @@ browser.on('connection', function connection(socket, req) {
 	});
 	socket.on('close', function (data) {
 		console.log(process.hrtime()[1], " browser disconnected");
-		dexter.end();
-		dexter.removeAllListeners();
-		dexter = null;
+		if (dexter) {
+			dexter.end();
+			dexter.removeAllListeners();
+			dexter = null;
+		}
 	});
 });
