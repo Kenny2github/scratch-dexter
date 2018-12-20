@@ -7,9 +7,9 @@ var browser = new ws.Server({ port:3000 });
 var dexter = null; // open a new socket every time ._.
 
 browser.on('connection', function connection(socket, req) {
-	console.log(process.hrtime()[1], " browser connected ", req.connection.Server);
+	console.log(process.hrtime()[1], "browser connected");
 	socket.on('message', function (data) {
-		console.log(process.hrtime()[1], " browser says ", data.toString());
+		console.log(process.hrtime()[1], "browser says", data.toString());
 		//Now as a client, open a raw socket to DexRun on localhost
 		if (!dexter) { 
 			try {
@@ -18,15 +18,15 @@ browser.on('connection', function connection(socket, req) {
 			} catch (e) {
 				return;
 			}
-			console.log(process.hrtime()[1], " dexter connecting");
+			console.log(process.hrtime()[1], "dexter connecting");
 			dexter.on("connect", function () {
-				console.log(process.hrtime()[1], " dexter connected");
+				console.log(process.hrtime()[1], "dexter connected");
 			});
 			dexter.on("data", function (data){
-				console.log(process.hrtime()[1], " dexter says: ", data);
+				console.log(process.hrtime()[1], "dexter says", data);
 				if (socket) {
 					socket.send(data, { binary: true });
-					console.log(process.hrtime()[1], " fw'd to browser ");
+					console.log(process.hrtime()[1], " fwed to browser ");
 				}
 			});
 			dexter.on("close", function () {
