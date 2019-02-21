@@ -119,7 +119,7 @@
 	};
 	var descriptor = {
 		blocks: [
-			[' ', 'move all joints j1: %n ° j2: %n ° j3: %n ° j4: %n ° j5: %n °', 'move_all_joints', 0, 0, 135, 45, 0],
+			[' ', 'move all joints j1: %n Â° j2: %n Â° j3: %n Â° j4: %n Â° j5: %n Â°', 'move_all_joints', 0, 0, 135, 45, 0],
 			[' ', 'move to x: %n m y: %n m z: %n m direction x: %m.dexDirDirs y: %m.dexDirDirs z: %m.dexDirDirs config: %m.dexLeftRight %m.dexUpDown %m.dexInOut', 'move_to', 0, 0.5, 0.075, '0', '0', '-1', 'right', 'up', 'out'],
 			[' ', 'pid move all joints j1: %n j2: %n j3: %n j4: %n j5: %n', 'pid_move_all_joints', 0, 0, 0, 0, 0],
 			[' ', 'get robot status', 'get_robot_status'],
