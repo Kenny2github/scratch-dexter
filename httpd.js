@@ -11,7 +11,7 @@ browser.on('connection', function connection(socket, req) {
 	socket.on('message', function (data) {
 		console.log(process.hrtime()[1], "browser says", data.toString());
 		//Now as a client, open a raw socket to DexRun on localhost
-		if (!dexter) { 
+		if (!dexter) {
 			try {
 				dexter = new net.Socket();
 				dexter.connect(50000, process.argv[2] || "192.168.1.240");

@@ -7,6 +7,10 @@
 		ext._ws.addEventListener('open', onOpen);
 		ext._ws.binaryType = 'arraybuffer';
 	};
+	function checkSock() {
+		if (ext._ws) return;
+		newSock();
+	};
 	function onClose(evt) {
 		console.log('closed');
 		try {
@@ -45,10 +49,12 @@
 	ext._count = 0;
 	ext.move_all_joints = function(j1, j2, j3, j4, j5) {
 		console.log('a ' + j1 + " " + j2 + " " + j3 + " " + j4 + " " + j5);
+		checkSock();
 		ext._ws.send("1 " + (ext._count++) + " 1 undefined a " + j1 * 3600 + " " + j2 * 3600 + " " + j3 * 3600 + " " + j4 * 3600 + " " + j5 * 3600 + " ;");
 	};
 	ext.move_to = function(x, y, z, jx, jy, jz, leftRight, upDown, inOut) {
 		console.log('M ' + x + ' ' + y + ' ' + z + ' ' + jx + ' ' + jy + ' ' + jz + ' ' + leftRight + ' ' + upDown + ' ' + inOut);
+		checkSock();
 		ext._ws.send(
 			"1 " + (ext._count++) + " 1 undefined M "
 			+ x * 1000000 + ' ' + y * 1000000 + ' ' + z * 1000000 + ' '
@@ -63,10 +69,12 @@
 	};
 	ext.pid_move_all_joints = function(j1, j2, j3, j4, j5) {
 		console.log('P', j1, j2, j3, j4, j5);
+		checkSock();
 		ext._ws.send('1 ' + (ext._count++) + ' 1 undefined P ' + j1 * 3600 + " " + j2 * 3600 + " " + j3 * 3600 + " " + j4 * 3600 + " " + j5 * 3600 + " ;");
 	};
 	ext.get_robot_status = function() {
 		console.log('g');
+		checkSock();
 		ext._ws.send('1 ' + (ext._count++) + ' 1 undefined g ;');
 	};
 	ext.get_last = function(thing) {
@@ -115,6 +123,7 @@
 	};
 	ext.empty_instruction_queue = function() {
 		console.log('F');
+		checkSock();
 		ext._ws.send('1 1 1 undefined F ;');
 	};
 	var descriptor = {
