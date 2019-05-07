@@ -1,10 +1,15 @@
 var net = require('net'); //network
 const ws = require('ws'); //websocket
 
+var dexter_ip = process.argv[2] || "192.168.1.142"
+
 //socket server to accept websockets from the browser on port 3000
 //and forward them out to DexRun as a raw socket
 var browser = new ws.Server({ port:3000 });
 var dexter = null; // open a new socket every time ._.
+
+console.log("waiting for connection on localhost:3000")
+console.log("Expecting Dexter on ",dexter_ip)
 
 browser.on('connection', function connection(socket, req) {
 	console.log(process.hrtime()[1], "browser connected");
@@ -14,7 +19,7 @@ browser.on('connection', function connection(socket, req) {
 		if (!dexter) {
 			try {
 				dexter = new net.Socket();
-				dexter.connect(50000, process.argv[2] || "192.168.1.240");
+				dexter.connect(50000, dexter_ip);
 			} catch (e) {
 				return;
 			}
