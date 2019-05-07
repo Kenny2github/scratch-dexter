@@ -47,6 +47,11 @@
 	};
 	ext._status = new DataView(new ArrayBuffer(60 * 4)); // 60 addresses, 32-bit int each
 	ext._count = 0;
+	ext.make_ins = function(s) {
+		console.log(s);
+		checkSock();
+		ext._ws.send("1 " + (ext._count++) + " 1 undefined " + s + " ;");
+	};
 	ext.move_all_joints = function(j1, j2, j3, j4, j5) {
 		console.log('a ' + j1 + " " + j2 + " " + j3 + " " + j4 + " " + j5);
 		checkSock();
@@ -138,6 +143,7 @@
 			['r', '%m.dexJointNames %m.dexJointData', 'get_joint', 'base', 'sin'],
 			['r', 'joint 6 %m.dexJoint6Data', 'get_joint_6', 'angle'],
 			['r', 'joint 7 %m.dexJoint7Data', 'get_joint_7', 'position'],
+			[' ', 'make ins op: %s', 'make_ins', 'g'],
 			[' ', 'reload', 'reload'],
 			[' ', 'empty instruction queue', 'empty_instruction_queue']
 		],
