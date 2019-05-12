@@ -21,7 +21,8 @@ browser.on('connection', function connection(socket, req) {
 				dexter = new net.Socket();
 				dexter.connect(50000, dexter_ip);
 			} catch (e) {
-				return;
+				console.log("Can't open connection to Dexter")
+				//return;
 			}
 			console.log(process.hrtime()[1], "dexter connecting");
 			dexter.on("connect", function () {
@@ -40,6 +41,10 @@ browser.on('connection', function connection(socket, req) {
 				console.log(process.hrtime()[1], " dexter disconnect");
 				if (socket) socket.close();
 			});
+			dexter.on("error", function(ex) {
+				console.log("handled error");
+				console.log(ex);
+			  });
 		}
         	try {
 			dexter.write(data.toString());
